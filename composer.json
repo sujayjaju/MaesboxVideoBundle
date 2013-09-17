@@ -1,5 +1,5 @@
 {
-    "name": "maerianne/MaesboxVideoBundle",
+    "name": "maesbox/video-bundle",
     "type": "symfony-bundle",
     "description": "Example bundle for use with Symfony2",
     "keywords": ["video", "bundle", "media", "ffmpeg", "sonata"],
