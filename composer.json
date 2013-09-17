@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Example bundle for use with Symfony2",
     "keywords": ["video", "bundle", "media", "ffmpeg", "sonata"],
-    "homepage": "http://github.com/maerianne/video-bundle",
+    "homepage": "http://github.com/maerianne/MaesboxVideoBundle",
     "license": "MIT",
     "authors": [
         {
