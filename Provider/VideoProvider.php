@@ -1,5 +1,5 @@
 <?php 
-namespace Maetheque\VideoBundle\Provider;
+namespace Maesbox\VideoBundle\Provider;
 
 use Sonata\MediaBundle\Provider\BaseProvider;
 use Sonata\MediaBundle\Model\MediaInterface;
