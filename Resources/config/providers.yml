@@ -1,0 +1,20 @@
+parameters:
+    maesbox.provider.video.class: Maesbox\VideoBundle\Provider\VideoProvider
+
+services:
+    sonata.media.provider.video:
+        class: %maesbox.provider.video.class%
+        tags:
+            - { name: maesbox.media.provider }
+        arguments:
+            - maesbox.provider.video
+            - @sonata.media.filesystem.local
+            - @sonata.media.cdn.server
+            - @sonata.media.generator.default
+            - @sonata.media.thumbnail.format
+            - [ flv, mp4, avi, mkv ]
+            - [ video/x-flv, video/x-msvideo, video/mp4 ]
+            - @sonata.media.resizer.simple
+        calls:
+            - [ setTemplates, [ { helper_thumbnail: SonataMediaBundle:Provider:thumbnail.html.twig, helper_view: MaethequeVideoBundle:Provider:video.html.twig } ] ]
+        
