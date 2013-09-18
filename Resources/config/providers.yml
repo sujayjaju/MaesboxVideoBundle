@@ -5,7 +5,7 @@ services:
     maesbox.provider.video:
         class: %maesbox.provider.video.class%
         tags:
-            - { name: maesbox.media.provider }
+            - { name: maesbox.provider }
         arguments:
             - maesbox.provider.video
             - @sonata.media.filesystem.local
