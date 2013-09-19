@@ -209,7 +209,7 @@ echo("Duration: ".$file['playtime_string'].
 
         $this->setFileContents($media);
 
-        $this->generateThumbnails($media);
+        //$this->generateThumbnails($media);
     }
 
     public function postRemove(MediaInterface $media) {
@@ -236,7 +236,7 @@ echo("Duration: ".$file['playtime_string'].
 
         $this->setFileContents($media);
 
-        $this->generateThumbnails($media);
+        //$this->generateThumbnails($media);
     }
 
     public function updateMetadata(MediaInterface $media, $force = false) 
