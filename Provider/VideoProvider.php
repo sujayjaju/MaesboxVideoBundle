@@ -194,7 +194,7 @@ echo("Duration: ".$file['playtime_string'].
             'realref' => $media->getProviderReference(),
             'width'             => $box->getWidth(),
             'height'            => $box->getHeight(),
-            'duration' => $media->gentLength(),
+            'duration' => $media->getLength(),
         ), $options);
     }
 
