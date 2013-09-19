@@ -76,20 +76,24 @@ echo("Duration: ".$file['playtime_string'].
         if (!$media->getProviderReference()) {
             $media->setProviderReference($this->generateReferenceName($media));
         }
-        
+        //On calcule le nombre d'images par seconde
+        $img_par_s=$fileinfos->getFrameCount()/$fileinfos->getDuration();
+
+        // Récupère l'image
+        $frame = $fileinfos->getFrame(15*$img_par_s);
         //$fileinfos = new ffmpeg_movie(  sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()) );
         
         if ($media->getBinaryContent()) {
             $media->setContentType($media->getBinaryContent()->getMimeType());
             $media->setSize($media->getBinaryContent()->getSize());
-            $media->setWidth($fileinfos->getFrame($fileinfos->getFrameCount()/2)->getWidth());
-            $media->setHeight($fileinfos->getFrame($fileinfos->getFrameCount()/2)->getHeight());
+            $media->setWidth($frame->getWidth());
+            $media->setHeight($frame->getHeight());
             $media->setLength($fileinfos->getDuration());
         }
         
         $media->setProviderStatus(MediaInterface::STATUS_OK);
     }
-
+       
     public function buildCreateForm(FormMapper $formMapper) 
     {
         $formMapper->add('binaryContent', 'file');
