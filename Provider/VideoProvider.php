@@ -324,17 +324,11 @@ echo("Duration: ".$file['playtime_string'].
     */
     protected function setFileContents(MediaInterface $media, $contents = null)
     {
-        //sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
-        //die;
-        /*$file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
-         */
-        if (!$contents) {
+        if (!$contents) 
+        {
             $contents = $media->getBinaryContent()->getRealPath();
         }
-        /*
-        $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : array();
-        $file->setContent(file_get_contents($contents), $metadata);*/
-        //touch(sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()));
+        
         move_uploaded_file($contents, sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()));
     }
 
@@ -344,8 +338,7 @@ echo("Duration: ".$file['playtime_string'].
      * @param array                                    $options
      *
      * @return \Imagine\Image\Box
-     */
-    protected function getBoxHelperProperties(MediaInterface $media, $format, $options = array())
+     */    protected function getBoxHelperProperties(MediaInterface $media, $format, $options = array())
     {
         if ($format == 'reference') {
             return $media->getBox();
