@@ -326,15 +326,15 @@ echo("Duration: ".$file['playtime_string'].
     {
         //sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
         //die;
-        //$file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
-         
+        /*$file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
+         */
         if (!$contents) {
-            $contents = $media->getBinaryContent();
+            $contents = $media->getBinaryContent()->getRealPath();
         }
-        
-        //$metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : array();
-        //$file->setContent(file_get_contents($contents), $metadata);
-        copy($contents, sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()));
+        /*
+        $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : array();
+        $file->setContent(file_get_contents($contents), $metadata);*/
+        move_uploaded_file($contents, sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()));
     }
 
     /**
