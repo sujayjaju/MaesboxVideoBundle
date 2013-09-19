@@ -81,7 +81,6 @@ echo("Duration: ".$file['playtime_string'].
 
         // Récupère l'image
         $frame = $fileinfos->getFrame(15*$img_par_s);
-        //$fileinfos = new ffmpeg_movie(  sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()) );
         
         if ($media->getBinaryContent()) {
             $media->setContentType($media->getBinaryContent()->getMimeType());
@@ -195,6 +194,7 @@ echo("Duration: ".$file['playtime_string'].
             'realref' => $media->getProviderReference(),
             'width'             => $box->getWidth(),
             'height'            => $box->getHeight(),
+            'duration' => $media->gentLength(),
         ), $options);
     }
 
