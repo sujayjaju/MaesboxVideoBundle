@@ -2,12 +2,12 @@ parameters:
     maesbox.provider.video.class: Maesbox\VideoBundle\Provider\VideoProvider
 
 services:
-    sonata.media.provider.video:
+    maesbox.media.provider.video:
         class: %maesbox.provider.video.class%
         tags:
-            - { name: sonata.media.provider }
+            - { name: maesbox.media.provider }
         arguments:
-            - sonata.media.provider.video
+            - maesbox.provider.video
             - @sonata.media.filesystem.local
             - @sonata.media.cdn.server
             - @sonata.media.generator.default

@@ -11,7 +11,7 @@
             <argument>Maesbox\VideoBundle\Entity\Video</argument>
         </service>
 
-        <service id="maesbox.provider.video" class="Maesbox\VideoBundle\Provider\VideoProvider" public="true">
+       <!-- <service id="maesbox.provider.video" class="Maesbox\VideoBundle\Provider\VideoProvider" public="true">
             <tag name="maesbox.provider" />
             <argument>maesbox.provider.video</argument>
             <argument />
@@ -27,7 +27,7 @@
                     <argument key='helper_thumbnail'>SonataMediaBundle:Provider:thumbnail.html.twig</argument>
                     <argument key='helper_view'>MaesboxVideoBundle:Provider:video.html.twig</argument>
                 </argument>
-            </call><!--
+            </call>
             arguments:
             - sonata.media.provider.video
             - @sonata.media.filesystem.local
@@ -39,7 +39,7 @@
             - @sonata.media.resizer.simple
         calls:
             - [ setTemplates, [ { helper_thumbnail: SonataMediaBundle:Provider:thumbnail.html.twig, helper_view: MaesboxVideoBundle:Provider:video.html.twig } ] ]
-        --></service>
+        </service>-->
         
     </services>
     
