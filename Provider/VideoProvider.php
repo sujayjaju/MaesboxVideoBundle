@@ -66,7 +66,6 @@ class VideoProvider extends BaseProvider
         $this->fixBinaryContent($media);
         $this->fixFilename($media);
 
-        $fileinfos = new ffmpeg_movie(  sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()) );
         //$fileinfos = new ffmpeg_movie($media->getBinaryContent());
         //$fileinfos = $this->getId3->analyze($media->getBinaryContent());
         /*
@@ -77,7 +76,9 @@ echo("Duration: ".$file['playtime_string'].
         if (!$media->getProviderReference()) {
             $media->setProviderReference($this->generateReferenceName($media));
         }
-
+        
+        $fileinfos = new ffmpeg_movie(  sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()) );
+        
         if ($media->getBinaryContent()) {
             $media->setContentType($media->getBinaryContent()->getMimeType());
             $media->setSize($media->getBinaryContent()->getSize());
