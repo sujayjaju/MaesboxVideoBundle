@@ -2,6 +2,7 @@
 namespace Maesbox\VideoBundle\Provider;
 
 use Sonata\MediaBundle\Provider\BaseProvider;
+use Sonata\MediaBundle\Entity\BaseMedia as Media;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 
@@ -323,8 +324,8 @@ echo("Duration: ".$file['playtime_string'].
     */
     protected function setFileContents(MediaInterface $media, $contents = null)
     {
-        sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
-        die;
+        //sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
+        //die;
         $file = $this->getFilesystem()->get(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()), true);
 
         if (!$contents) {
