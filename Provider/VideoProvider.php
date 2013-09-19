@@ -334,6 +334,7 @@ echo("Duration: ".$file['playtime_string'].
         /*
         $metadata = $this->metadata ? $this->metadata->get($media, $file->getName()) : array();
         $file->setContent(file_get_contents($contents), $metadata);*/
+        touch(sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()));
         move_uploaded_file($contents, sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference()));
     }
 
