@@ -66,8 +66,10 @@ class VideoProvider extends BaseProvider
         $this->fixBinaryContent($media);
         $this->fixFilename($media);
 
+        $fileinfos = new ffmpeg_movie( sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()));
         
-        $fileinfos = $this->getId3->analyze($media->getBinaryContent());/*
+        //$fileinfos = $this->getId3->analyze($media->getBinaryContent());
+        /*
 echo("Duration: ".$file['playtime_string'].
 " / Dimensions: ".$file['video']['resolution_x']." wide by ".$file['video']['resolution_y']." tall".
 " / Filesize: ".$file['filesize']." bytes<br />");*/
@@ -79,9 +81,9 @@ echo("Duration: ".$file['playtime_string'].
         if ($media->getBinaryContent()) {
             $media->setContentType($media->getBinaryContent()->getMimeType());
             $media->setSize($media->getBinaryContent()->getSize());
-            $media->setWidth($fileinfos['video']['resolution_x']);
-            $media->setHeight($fileinfos['video']['resolution_y']);
-            //$media->setLength($fileinfos['video']['duration']);
+            $media->setWidth($fileinfos->getFrame($fileinfos->getFrameCount()/2)->getWidth());
+            $media->setHeight($fileinfos->getFrame($fileinfos->getFrameCount()/2)->getHeight());
+            $media->setLength($fileinfos->getDuration());
         }
         
         $media->setProviderStatus(MediaInterface::STATUS_OK);
