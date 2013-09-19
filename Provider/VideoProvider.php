@@ -207,7 +207,7 @@ echo("Duration: ".$file['playtime_string'].
             return;
         }
 
-        $this->setFileContents($media);
+        //$this->setFileContents($media);
 
         //$this->generateThumbnails($media);
     }
@@ -234,7 +234,7 @@ echo("Duration: ".$file['playtime_string'].
 
         $this->fixBinaryContent($media);
 
-        $this->setFileContents($media);
+        //$this->setFileContents($media);
 
         //$this->generateThumbnails($media);
     }
