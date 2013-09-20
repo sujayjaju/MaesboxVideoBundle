@@ -111,7 +111,9 @@ class VideoProvider extends BaseProvider
 
     public function generateThumbnails(MediaInterface $media) 
     {
-        parent::generateThumbnails($media);
+        $this->generateReferenceImage($media);
+        
+        //parent::generateThumbnails($media);
     }
 
     /**
@@ -227,8 +229,6 @@ class VideoProvider extends BaseProvider
         }
 
         $this->setFileContents($media);
-        
-        $this->generateReferenceImage($media);
 
         //$this->generateThumbnails($media);
     }
@@ -257,8 +257,6 @@ class VideoProvider extends BaseProvider
 
         $this->setFileContents($media);
         
-        $this->generateReferenceImage($media);
-
         //$this->generateThumbnails($media);
     }
 
