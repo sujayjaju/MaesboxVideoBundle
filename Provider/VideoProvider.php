@@ -200,7 +200,7 @@ class VideoProvider extends BaseProvider
 
     public function getReferenceImage(MediaInterface $media) 
     {
-        
+        return sprintf('%s/%s/%s.jpg',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference());
     }
     
     public function generateReferenceImage(MediaInterface $media)
@@ -217,7 +217,7 @@ class VideoProvider extends BaseProvider
         $frame = $fileinfos->getFrame(15*$img_par_s);
         
         $img = $frame->toGDImage();
-        //ImageJpeg($img, $dst);
+        ImageJpeg($img, sprintf('%s/%s/%s.jpg',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()));
     }
 
     public function postPersist(MediaInterface $media) 
