@@ -67,12 +67,7 @@ class VideoProvider extends BaseProvider
         $this->fixFilename($media);
 
         $fileinfos = new ffmpeg_movie($media->getBinaryContent()->getRealPath());
-        //$fileinfos = $this->getId3->analyze($media->getBinaryContent());
-        /*
-echo("Duration: ".$file['playtime_string'].
-" / Dimensions: ".$file['video']['resolution_x']." wide by ".$file['video']['resolution_y']." tall".
-" / Filesize: ".$file['filesize']." bytes<br />");*/
-        // this is the name used to store the file
+       
         if (!$media->getProviderReference()) {
             $media->setProviderReference($this->generateReferenceName($media));
         }
@@ -247,20 +242,20 @@ echo("Duration: ".$file['playtime_string'].
     }
 
     public function updateMetadata(MediaInterface $media, $force = false) 
-    {
-        // this is now optimized at all!!!
-        $path = tempnam(sys_get_temp_dir(), 'sonata_update_metadata');
-        $fileObject = new \SplFileObject($path, 'w');
-        $fileObject->fwrite($this->getReferenceFile($media)->getContent());
-
-        $media->setSize($fileObject->getSize());
-        
+    {        
         $fileinfos = new ffmpeg_movie( sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()));
-        //$fileinfos->getFrame($fileinfos->getFrameCount()/2)->getWidth()
-        $media->setWidth($fileinfos->getFrame($fileinfos->getFrameCount()/2)->getWidth());
-        //$media->setHeight($fileinfos->getFrame($fileinfos->getFrameCount()/2)->getHeight());
-        //$media->setMetadataValue('infos', $fileinfos->getDuration() );
-        //$media->setLength($fileinfos['video']['duration']);
+        
+        $img_par_s=$fileinfos->getFrameCount()/$fileinfos->getDuration();
+
+        // Récupère l'image
+        $frame = $fileinfos->getFrame(15*$img_par_s);
+        
+        $media->setContentType($media->getBinaryContent()->getMimeType());
+        $media->setSize($media->getBinaryContent()->getSize());
+        $media->setWidth($frame->getWidth());
+        $media->setHeight($frame->getHeight());
+        $media->setLength($fileinfos->getDuration());
+        
     }
     
     /**
