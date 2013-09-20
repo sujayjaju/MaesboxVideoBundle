@@ -200,7 +200,7 @@ class VideoProvider extends BaseProvider
 
     public function getReferenceImage(MediaInterface $media) 
     {
-        return sprintf('%s/%s/%s.jpg',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference());
+        return sprintf('%s/%s.jpg', $this->generatePath($media),$media->getProviderReference());
     }
     
     public function generateReferenceImage(MediaInterface $media)
