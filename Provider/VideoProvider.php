@@ -262,17 +262,17 @@ class VideoProvider extends BaseProvider
 
     public function updateMetadata(MediaInterface $media, $force = false) 
     {        
-        $fileinfos = new ffmpeg_movie( sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()));
-        $binaryContent = new File($media->getBinaryContent());
+        $file = sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference());
+        $fileinfos = new ffmpeg_movie($file);
         
-        $img_par_s=$fileinfos->getFrameCount()/$fileinfos->getDuration();
+        $img_par_s = $fileinfos->getFrameCount()/$fileinfos->getDuration();
 
         // Récupère l'image
         $frame = $fileinfos->getFrame(15*$img_par_s);
         
         //$media->setContentType($media->getProviderReference()->getMimeType());
-        $media->setContentType($binaryContent->getMimeType());
-        //$media->setSize($media->getBinaryContent()->getSize());
+        $media->setContentType(mime_content_type($file));
+        $media->setSize(filesize($file));
         
         $media->setWidth($frame->getWidth());
         $media->setHeight($frame->getHeight());
