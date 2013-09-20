@@ -230,7 +230,7 @@ class VideoProvider extends BaseProvider
 
         $this->setFileContents($media);
 
-        //$this->generateThumbnails($media);
+        $this->generateThumbnails($media);
     }
 
     public function postRemove(MediaInterface $media) {
@@ -257,7 +257,7 @@ class VideoProvider extends BaseProvider
 
         $this->setFileContents($media);
         
-        //$this->generateThumbnails($media);
+        $this->generateThumbnails($media);
     }
 
     public function updateMetadata(MediaInterface $media, $force = false) 
