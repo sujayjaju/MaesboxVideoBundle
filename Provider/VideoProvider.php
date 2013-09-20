@@ -202,7 +202,7 @@ class VideoProvider extends BaseProvider
 
     public function getReferenceImage(MediaInterface $media) 
     {
-        return sprintf('%s/%s.jpg', $this->generatePath($media),$media->getProviderReference());
+        return $this->getFilesystem()->get(sprintf('%s/%s.jpg', $this->generatePath($media),$media->getProviderReference()), true);
     }
     
     public function generateReferenceImage(MediaInterface $media)
@@ -279,7 +279,6 @@ class VideoProvider extends BaseProvider
         $media->setLength($fileinfos->getDuration());
         
         $media->setMetadataValue('bitrate', $fileinfos->getBitRate());
-        //$media->setMetadataValue('other', json_encode($fileinfos));
         /*
         echo "<li>Bitrate : ".$mov->getBitRate()."</li>";
 echo "<li>Images : ".$mov->getFrameCount()."</li>";
