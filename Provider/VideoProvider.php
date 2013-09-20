@@ -227,6 +227,8 @@ class VideoProvider extends BaseProvider
         }
 
         $this->setFileContents($media);
+        
+        $this->generateReferenceImage($media);
 
         //$this->generateThumbnails($media);
     }
