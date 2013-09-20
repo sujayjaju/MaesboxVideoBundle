@@ -205,7 +205,19 @@ class VideoProvider extends BaseProvider
     
     public function generateReferenceImage(MediaInterface $media)
     {
+        $fileinfos = new ffmpeg_movie($media->getBinaryContent()->getRealPath());
+       
+        if (!$media->getProviderReference()) {
+            $media->setProviderReference($this->generateReferenceName($media));
+        }
+        //On calcule le nombre d'images par seconde
+        $img_par_s=$fileinfos->getFrameCount()/$fileinfos->getDuration();
+
+        // Récupère l'image
+        $frame = $fileinfos->getFrame(15*$img_par_s);
         
+        $img = $frame->toGDImage();
+        //ImageJpeg($img, $dst);
     }
 
     public function postPersist(MediaInterface $media) 
@@ -242,6 +254,8 @@ class VideoProvider extends BaseProvider
         $this->fixBinaryContent($media);
 
         $this->setFileContents($media);
+        
+        $this->generateReferenceImage($media);
 
         //$this->generateThumbnails($media);
     }
