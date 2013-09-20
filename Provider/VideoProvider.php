@@ -278,7 +278,7 @@ class VideoProvider extends BaseProvider
         $media->setLength($fileinfos->getDuration());
         
         $media->setMetadataValue('bitrate', $fileinfos->getBitRate());
-        $media->setMetadataValue('other', json_encode($fileinfos));
+        //$media->setMetadataValue('other', json_encode($fileinfos));
         /*
         echo "<li>Bitrate : ".$mov->getBitRate()."</li>";
 echo "<li>Images : ".$mov->getFrameCount()."</li>";
