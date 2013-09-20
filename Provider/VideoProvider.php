@@ -269,7 +269,7 @@ class VideoProvider extends BaseProvider
         // Récupère l'image
         $frame = $fileinfos->getFrame(15*$img_par_s);
         
-        //$media->setContentType($media->getProviderReference()->getMimeType());
+        $media->setContentType($media->getProviderReference()->getMimeType());
         //$media->setContentType($media->getBinaryContent()->getMimeType());
         //$media->setSize($media->getBinaryContent()->getSize());
         
