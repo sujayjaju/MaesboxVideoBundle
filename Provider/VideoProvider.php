@@ -269,11 +269,20 @@ class VideoProvider extends BaseProvider
         // Récupère l'image
         $frame = $fileinfos->getFrame(15*$img_par_s);
         
-        $media->setContentType($media->getBinaryContent()->getMimeType());
+        //$media->setContentType($media->getBinaryContent()->getMimeType());
         $media->setSize($media->getBinaryContent()->getSize());
         $media->setWidth($frame->getWidth());
         $media->setHeight($frame->getHeight());
         $media->setLength($fileinfos->getDuration());
+        
+        $media->setMetadataValue('bitrate', $fileinfos->getBitRate());
+        $media->setMetadataValue('other', json_encode($fileinfos));
+        /*
+        echo "<li>Bitrate : ".$mov->getBitRate()."</li>";
+echo "<li>Images : ".$mov->getFrameCount()."</li>";
+echo "<li>Codec Vidéo : ".$mov->getVideoCodec()."</li>";
+echo "<li>Codec Audio : ".$mov->getAudioCodec()."</li>";
+echo "<li>Cannaux : ".$mov->getAudioChannels()."</li></ul>";*/
         
     }
     
