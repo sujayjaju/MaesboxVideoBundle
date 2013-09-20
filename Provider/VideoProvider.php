@@ -207,7 +207,7 @@ class VideoProvider extends BaseProvider
     
     public function generateReferenceImage(MediaInterface $media)
     {
-        $fileinfos = new ffmpeg_movie($media->getBinaryContent()->getRealPath());
+        $fileinfos = new ffmpeg_movie(sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()));
        
         if (!$media->getProviderReference()) {
             $media->setProviderReference($this->generateReferenceName($media));
