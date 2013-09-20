@@ -11,14 +11,14 @@
 <script type="text/javascript" src="/common/js/jwplayer.html5.js"></script>
 <script type="text/javascript">
     jwplayer("container").setup({
-        file: "http://vasper-server.fr.nf{{ options.file }}",
-        image: "http://dl.dropbox.com/u/{{ options.thumbnail}}",
+        file: "{{ options.file }}",
+        image: "{{ options.thumbnail}}",
         width: "{{ options.width }}",
         height: "{{ options.height }}",
         //skin: "/common/player/glow/glow.xml",
         modes: [
             { type: "html5" },
-            { type: "flash", src: "{{ asset('bundles/maethequevideo/player/jwplayer.flash.swf') }}" },
+            { type: "flash", src: "{{ asset('bundles/maesboxvideo/player/jwplayer.flash.swf') }}" },
             { type: "http" }
         ]
     });
