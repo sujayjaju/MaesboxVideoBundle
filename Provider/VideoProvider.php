@@ -129,13 +129,13 @@ class VideoProvider extends BaseProvider
     
     public function generatePublicUrl(MediaInterface $media, $format) 
     {
-        /*
+        
         if ($format == 'reference') {
             $path = sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
         } else {
             $path = sprintf('%s/%s_%s', $this->generatePath($media), $format, $media->getProviderReference());
-        }*/
-        $path = sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
+        }
+        //$path = sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
         return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
         //return ;
     }
@@ -199,6 +199,11 @@ class VideoProvider extends BaseProvider
     }
 
     public function getReferenceImage(MediaInterface $media) 
+    {
+        
+    }
+    
+    public function generateReferenceImage(MediaInterface $media)
     {
         
     }
@@ -317,7 +322,7 @@ class VideoProvider extends BaseProvider
     }
     
     /**
-    * Set the file contents for an image
+    * Set the file contents for a video
     *
     * @param \Sonata\MediaBundle\Model\MediaInterface $media
     * @param string $contents path to contents, defaults to MediaInterface BinaryContent
@@ -340,7 +345,8 @@ class VideoProvider extends BaseProvider
      * @param array                                    $options
      *
      * @return \Imagine\Image\Box
-     */    protected function getBoxHelperProperties(MediaInterface $media, $format, $options = array())
+     */    
+    protected function getBoxHelperProperties(MediaInterface $media, $format, $options = array())
     {
         if ($format == 'reference') {
             return $media->getBox();
