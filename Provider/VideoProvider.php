@@ -407,4 +407,19 @@ echo "<li>Cannaux : ".$mov->getAudioChannels()."</li></ul>";*/
 
         return $this->resizer->getBox($media, $settings);
     }
+    
+    /**
+     * @param \Sonata\MediaBundle\Model\MediaInterface $media
+     *
+     * @return string the file extension for the $media, or the $defaultExtension if not available
+     */
+    protected function getExtension(MediaInterface $media)
+    {
+        $ext = $media->getExtension();
+        if (!is_string($ext) || strlen($ext) < 3) {
+            $ext = $this->defaultFormat;
+        }
+
+        return $ext;
+    }
 }
