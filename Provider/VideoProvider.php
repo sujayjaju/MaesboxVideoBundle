@@ -150,7 +150,7 @@ class VideoProvider extends BaseProvider
     */
     public function generatePrivateUrl(MediaInterface $media, $format)
     {
-        return false;
+        
     }
     
     public function generatePublicUrl(MediaInterface $media, $format) 
