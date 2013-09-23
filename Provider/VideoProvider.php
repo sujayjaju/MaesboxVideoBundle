@@ -134,10 +134,10 @@ class VideoProvider extends BaseProvider
         }
     }
 
-    public function generateThumbsPrivateUrl(MediaProviderInterface $provider, MediaInterface $media, $format)
+    public function generateThumbsPrivateUrl(MediaInterface $media, $format)
     {
         return sprintf('%s/thumb_%s_%s.%s',
-            $provider->generatePath($media),
+            $this->generatePath($media),
             $media->getId(),
             $format,
             $this->getExtension($media)
