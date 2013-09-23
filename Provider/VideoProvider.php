@@ -109,7 +109,7 @@ class VideoProvider extends BaseProvider
         $formBuilder->add('binaryContent', 'file');
     }
 
-    public function generateThumbnails(MediaInterface $media) 
+    public function generateThumbnails(MediaInterface $media, $ext = 'jpeg') 
     {
         $this->generateReferenceImage($media);
         
@@ -126,21 +126,21 @@ class VideoProvider extends BaseProvider
                 $this->getResizer()->resize(
                     $media,
                     $referenceImage,
-                    $this->getFilesystem()->get($this->generateThumbsPrivateUrl($media, $format), true),
-                    'jpeg',
+                    $this->getFilesystem()->get($this->generateThumbsPrivateUrl($media, $format, $ext), true),
+                    $ext,
                     $settings
                 );
             }
         }
     }
 
-    public function generateThumbsPrivateUrl($media, $format)
+    public function generateThumbsPrivateUrl($media, $format, $ext = 'jpeg')
     {
         return sprintf('%s/thumb_%s_%s.%s',
             $this->generatePath($media),
             $media->getId(),
             $format,
-            $this->getExtension($media)
+            $ext
         );
     }
     
