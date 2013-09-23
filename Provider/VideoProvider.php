@@ -113,7 +113,25 @@ class VideoProvider extends BaseProvider
     {
         $this->generateReferenceImage($media);
         
-        parent::generateThumbnails($media);
+        //parent::generateThumbnails($media);
+        
+        if (!$this->requireThumbnails()) {
+            return;
+        }
+
+        $referenceImage = $this->getReferenceImage($media);
+
+        foreach ($this->getFormats() as $format => $settings) {
+            if (substr($format, 0, strlen($media->getContext())) == $media->getContext() || $format === 'admin') {
+                $this->getResizer()->resize(
+                    $media,
+                    $referenceImage,
+                    $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true),
+                    $this->getExtension($media),
+                    $settings
+                );
+            }
+        }
     }
 
     /**
