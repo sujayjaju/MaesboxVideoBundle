@@ -113,7 +113,7 @@ class VideoProvider extends BaseProvider
     {
         $this->generateReferenceImage($media);
         
-        //parent::generateThumbnails($media);
+        parent::generateThumbnails($media);
     }
 
     /**
