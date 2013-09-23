@@ -124,7 +124,7 @@ class VideoProvider extends BaseProvider
         foreach ($this->getFormats() as $format => $settings) {
             if (substr($format, 0, strlen($media->getContext())) == $media->getContext() || $format === 'admin') {
                 $this->getResizer()->resize(
-                    $referenceImage,
+                    $media,
                     $referenceImage,
                     $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true),
                     'jpeg',
