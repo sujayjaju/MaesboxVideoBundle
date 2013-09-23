@@ -127,7 +127,7 @@ class VideoProvider extends BaseProvider
                     $media,
                     $referenceImage,
                     $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true),
-                    $this->getExtension($media),
+                    'jpeg',
                     $settings
                 );
             }
