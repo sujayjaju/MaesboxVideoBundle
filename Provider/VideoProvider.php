@@ -133,6 +133,7 @@ class VideoProvider extends BaseProvider
             }
         }
     }
+    
 
     public function generateThumbsPrivateUrl($media, $format, $ext = 'jpeg')
     {
