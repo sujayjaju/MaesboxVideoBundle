@@ -126,7 +126,7 @@ class VideoProvider extends BaseProvider
                 $this->getResizer()->resize(
                     $media,
                     $referenceImage,
-                    $this->getFilesystem()->get($this->generatePrivateUrl($media, $format), true),
+                    $this->getFilesystem()->get($this->generateThumbsPrivateUrl($media, $format), true),
                     'jpeg',
                     $settings
                 );
