@@ -220,7 +220,7 @@ class VideoProvider extends BaseProvider
 
     public function getReferenceImage(MediaInterface $media) 
     {
-        return $this->getFilesystem()->get(sprintf('%s/%s.jpg', $this->generatePath($media),$media->getProviderReference()), true);
+        return $this->getFilesystem()->get(sprintf('%s/%s.jpg', $this->generatePath($media),str_replace($this->getExtension($media), 'jpeg', $media->getProviderReference())), true);
     }
     
     public function generateReferenceImage(MediaInterface $media)
@@ -231,13 +231,13 @@ class VideoProvider extends BaseProvider
             $media->setProviderReference($this->generateReferenceName($media));
         }
         //On calcule le nombre d'images par seconde
-        $img_par_s=$fileinfos->getFrameCount()/$fileinfos->getDuration();
-
+        $img_par_s=$fileinfos->getFrameCount()/$fileinfos->getDuration();        
+        
         // Récupère l'image
         $frame = $fileinfos->getFrame(15*$img_par_s);
         
         $img = $frame->toGDImage();
-        ImageJpeg($img, sprintf('%s/%s/%s.jpg',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()));
+        ImageJpeg($img, sprintf('%s/%s/%s.jpg',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),str_replace($this->getExtension($media), 'jpeg', $media->getProviderReference())));
     }
 
     public function postPersist(MediaInterface $media) 
