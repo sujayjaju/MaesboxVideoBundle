@@ -1,14 +1,14 @@
 {
-    "name": "maesbox/video-bundle",
+    "name": "sujayjaju/video-bundle",
     "type": "symfony-bundle",
     "description": "Video Bundle adding functiunalities to Sonata media bundle:<br>=> a video provider- handle video upload- re-encode uploaded video to th defined formats   - thumbs generation",
     "keywords": ["video", "bundle", "media", "ffmpeg", "sonata"],
-    "homepage": "http://github.com/maerianne/MaesboxVideoBundle",
+    "homepage": "http://github.com/sujayjaju/MaesboxVideoBundle",
     "license": "MIT",
     "authors": [
         {
-            "name": "Maerianne",
-            "email": "maerianne@gmail.com"
+            "name": "Sujay Jaju ",
+            "email": "sujay.jaju@gmail.com"
         }
     ],
     "require": {
