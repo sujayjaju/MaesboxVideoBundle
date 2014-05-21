@@ -388,9 +388,9 @@ class VideoProvider extends BaseProvider
         {
             $contents = $media->getBinaryContent()->getRealPath();
         }
-        $destination = sprintf('%s/%s/',$this->getFilesystem()->getAdapter()->getDirectory());
+        $destination = sprintf('%s/%s/',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media));
         mkdir($destination,775,true);
-        move_uploaded_file($contents,$destination.$this->generatePath($media),$media->getProviderReference());
+        move_uploaded_file($contents,$destination.$media->getProviderReference());
     }
 
     /**
