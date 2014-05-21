@@ -7,7 +7,7 @@ services:
         tags:
             - { name: sonata.media.provider }
         arguments:
-            - maesbox_video.provider.video
+            - sonata.media.provider.video
             - @sonata.media.filesystem.local
             - @sonata.media.cdn.server
             - @sonata.media.generator.default
@@ -15,6 +15,7 @@ services:
             - [ flv, mp4, avi, mkv ]
             - [ video/x-flv, video/x-msvideo, video/mp4 ]
             - @sonata.media.resizer.simple
+            - @sonata.media.metadata.proxy
         calls:
-            - [ setTemplates, [ { helper_thumbnail: SonataMediaBundle:Provider:thumbnail.html.twig, helper_view: MaesboxVideoBundle:Provider:video.html.twig } ] ]
+            - [ setTemplates, [ { helper_thumbnail: MaesboxVideoBundle:Provider:thumbnail.html.twig, helper_view: MaesboxVideoBundle:Provider:video.html.twig } ] ]
         

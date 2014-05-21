@@ -52,7 +52,7 @@ class VideoProvider extends BaseProvider
     */
     public function __construct($name, Filesystem $filesystem, CDNInterface $cdn, GeneratorInterface $pathGenerator, ThumbnailInterface $thumbnail, array $allowedExtensions = array(), array $allowedMimeTypes = array(), ResizerInterface $resizer, MetadataBuilderInterface $metadata = null )
     {
-        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail);
+        parent::__construct($name, $filesystem, $cdn, $pathGenerator, $thumbnail, null, $metadata);
 
         $this->allowedExtensions = $allowedExtensions;
         $this->allowedMimeTypes = $allowedMimeTypes;
@@ -60,13 +60,21 @@ class VideoProvider extends BaseProvider
         $this->resizer = $resizer;
         $this->getId3 = new GetId3;
     }
-    
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProviderMetadata()
+    {
+        return new Metadata($this->getName(), $this->getName().".description", null, "SonataMediaBundle", array('class' => 'fa fa-video'));
+    }
+
     protected function doTransform(MediaInterface $media) 
     {
         $this->fixBinaryContent($media);
         $this->fixFilename($media);
 
-        $fileinfos = new ffmpeg_movie($media->getBinaryContent()->getRealPath());
+        $fileinfos = new ffmpeg_movie($media->getBinaryContent()->getRealPath(), false);
        
         if (!$media->getProviderReference()) {
             $media->setProviderReference($this->generateReferenceName($media));
@@ -84,7 +92,8 @@ class VideoProvider extends BaseProvider
             $media->setHeight($frame->getHeight());
             $media->setLength($fileinfos->getDuration());
         }
-        
+
+        $media->setProviderName($this->name);
         $media->setProviderStatus(MediaInterface::STATUS_OK);
     }
        
@@ -155,9 +164,10 @@ class VideoProvider extends BaseProvider
     
     public function generatePublicUrl(MediaInterface $media, $format) 
     {
-        
         if ($format == 'reference') {
             $path = sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
+        }elseif ($format == 'admin') {
+            $path = sprintf('%s/%s', $this->generatePath($media),str_replace($this->getExtension($media), 'jpeg', $media->getProviderReference()));
         } else {
             $path = sprintf('%s/%s_%s', $this->generatePath($media), $format, $media->getProviderReference());
         }
@@ -231,7 +241,7 @@ class VideoProvider extends BaseProvider
     
     public function generateReferenceImage(MediaInterface $media)
     {
-        $fileinfos = new ffmpeg_movie(sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()));
+        $fileinfos = new ffmpeg_movie(sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference()), false);
        
         if (!$media->getProviderReference()) {
             $media->setProviderReference($this->generateReferenceName($media));
@@ -287,7 +297,7 @@ class VideoProvider extends BaseProvider
     public function updateMetadata(MediaInterface $media, $force = false) 
     {        
         $file = sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),$media->getProviderReference());
-        $fileinfos = new ffmpeg_movie($file);
+        $fileinfos = new ffmpeg_movie($file, false);
         
         $img_par_s = $fileinfos->getFrameCount()/$fileinfos->getDuration();
 
@@ -303,12 +313,6 @@ class VideoProvider extends BaseProvider
         $media->setLength($fileinfos->getDuration());
         
         $media->setMetadataValue('bitrate', $fileinfos->getBitRate());
-        /*
-        echo "<li>Bitrate : ".$mov->getBitRate()."</li>";
-echo "<li>Images : ".$mov->getFrameCount()."</li>";
-echo "<li>Codec Vidéo : ".$mov->getVideoCodec()."</li>";
-echo "<li>Codec Audio : ".$mov->getAudioCodec()."</li>";
-echo "<li>Cannaux : ".$mov->getAudioChannels()."</li></ul>";*/
         
     }
     

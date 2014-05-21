@@ -1,18 +1,15 @@
-{{ format | json_encode() }}<br>
-{#{{ media.box | json_encode() }}<br>#}
-{{ options | json_encode() }}<br>
-{{ assetic | json_encode() }}<br>
-
 {% javascripts '@MaesboxVideoBundle/Resources/public/js/jwplayer.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<div id="container">Chargement du player en cours ...</div>
+{% javascripts '@MaesboxVideoBundle/Resources/public/js/jwplayer.html5.js' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
-<div id="container">Chargement du player en cours ...</div>
-<script type="text/javascript" src="/common/js/jwplayer.html5.js"></script>
 <script type="text/javascript">
     jwplayer("container").setup({
         file: "{{ options.file }}",
-        image: "{{ options.thumbnail }}",
+        image: "/uploads/media/{{ options.thumbnail.getKey() }}",
         width: "{{ options.width }}",
         height: "{{ options.height }}",
         //skin: "/common/player/glow/glow.xml",
