@@ -10,8 +10,8 @@
     jwplayer("container").setup({
         file: "{{ options.file }}",
         image: "/uploads/media/{{ options.thumbnail.getKey() }}",
-        width: "{{ options.width }}",
-        height: "{{ options.height }}",
+        width: "{{ 480 }}",
+        height: "{{ 320 }}",
         //skin: "/common/player/glow/glow.xml",
         modes: [
             { type: "html5" },
