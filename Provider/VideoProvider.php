@@ -120,6 +120,28 @@ class VideoProvider extends BaseProvider
 
     public function generateThumbnails(MediaInterface $media, $ext = 'jpeg') 
     {
+
+        //convert video
+        $source =  sprintf('%s/%s/%s',
+            $this->getFilesystem()->getAdapter()->getDirectory(),
+            $this->generatePath($media),
+            $media->getProviderReference());
+
+        $path = sprintf('%s/%s/videos_big_%s',
+            $this->getFilesystem()->getAdapter()->getDirectory(),
+            $this->generatePath($media),
+            $media->getProviderReference());
+
+        $height = round(480 * $media->getHeight() / $media->getWidth());
+
+        $fast_preset = "-coder 1 -flags +loop -cmp +chroma -partitions +parti8x8+parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1 -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -bf 3 -refs 2 -directpred 1 -trellis 1 -flags2 +bpyramid+mixed_refs+wpred+dct8x8+fastpskip -wpredp 2 -rc_lookahead 30";
+        $ffcmd = "ffmpeg -i $source $fast_preset -s 480x$height -ab 128K -b 896K -vcodec libx264 -acodec aac -strict experimental $path" ;
+        $bxcmd = "MP4Box -inter 200 $source" ;
+        echo $ffcmd;
+        $output = array();
+        $return = 0;
+        exec("$ffcmd && $bxcmd", $output, $return);
+
         $this->generateReferenceImage($media);
         
         //parent::generateThumbnails($media);
@@ -229,9 +251,14 @@ class VideoProvider extends BaseProvider
         ), $options);
     }
 
-    public function getReferenceFile(MediaInterface $media) 
+    public function getReferenceFile(MediaInterface $media)
     {
         return $this->getFilesystem()->get(sprintf('%s/%s',$this->generatePath($media),$media->getProviderReference()), true);
+    }
+
+    public function getReferencePath(MediaInterface $media, $format)
+    {
+        return $this->getFilesystem()->get(sprintf('%s/%s_%s',$this->generatePath($media), $format, $media->getProviderReference()), true);
     }
 
     public function getReferenceImage(MediaInterface $media) 
@@ -281,10 +308,8 @@ class VideoProvider extends BaseProvider
         $oldMedia = clone $media;
         $oldMedia->setProviderReference($media->getPreviousProviderReference());
 
-        $path = $this->getReferenceFile($oldMedia);
-
-        if ($this->getFilesystem()->has($path)) {
-            $this->getFilesystem()->delete($path);
+        if ($this->getFilesystem()->has($oldMedia)) {
+            $this->getFilesystem()->delete($oldMedia);
         }
 
         $this->fixBinaryContent($media);
