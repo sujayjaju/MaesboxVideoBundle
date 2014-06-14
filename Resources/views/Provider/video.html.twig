@@ -32,7 +32,7 @@
 </script>
 
 <video id="video-player" class="video-js vjs-default-skin vjs-big-play-centered"
-       controls preload="false" width="480" height="320"
+       controls preload="metadata" width="480" height="320"
        poster= "/uploads/media/{{ options.thumbnail.getKey() }}"
        data-setup='{"example_option":true}'>
     <source src="{{ options.file }}" type='video/mp4' />
