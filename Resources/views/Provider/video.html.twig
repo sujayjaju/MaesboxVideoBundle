@@ -1,22 +1,39 @@
-{% javascripts '@MaesboxVideoBundle/Resources/public/js/jwplayer.js' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-<div id="container"Video Player Loading...</div>
-{% javascripts '@MaesboxVideoBundle/Resources/public/js/jwplayer.html5.js' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+{#{% javascripts '@MaesboxVideoBundle/Resources/public/js/jwplayer.js' %}#}
+{#<script type="text/javascript" src="{{ asset_url }}"></script>#}
+{#{% endjavascripts %}#}
+{#<div id="container"Video Player Loading...</div>#}
+{#{% javascripts '@MaesboxVideoBundle/Resources/public/js/jwplayer.html5.js' %}#}
+{#<script type="text/javascript" src="{{ asset_url }}"></script>#}
+{#{% endjavascripts %}#}
 
-<script type="text/javascript">
-    jwplayer("container").setup({
-        file: "{{ options.file }}",
-        image: "/uploads/media/{{ options.thumbnail.getKey() }}",
-        width: "{{ 480 }}",
-        height: "{{ 320 }}",
-        //skin: "/common/player/glow/glow.xml",
-        modes: [
-            { type: "html5" },
-            { type: "flash", src: "{{ asset('bundles/maesboxvideo/player/jwplayer.flash.swf') }}" },
-            { type: "http" }
-        ]
+{#<script type="text/javascript">#}
+    {#jwplayer("container").setup({#}
+        {#file: "{{ options.file }}",#}
+        {#image: "/uploads/media/{{ options.thumbnail.getKey() }}",#}
+        {#width: "{{ 480 }}",#}
+        {#height: "{{ 320 }}",#}
+        {#//skin: "/common/player/glow/glow.xml",#}
+        {#modes: [#}
+            {#{ type: "html5" },#}
+            {#{ type: "flash", src: "{{ asset('bundles/maesboxvideo/player/jwplayer.flash.swf') }}" },#}
+            {#{ type: "http" }#}
+        {#]#}
+    {#});#}
+{#</script>#}
+
+<link href="/css/video-js.css" rel="stylesheet">
+<script src="/js/video.js"></script>
+<script>
+    soundManager.setup({
+        // required: path to directory containing SM2 SWF files
+        url: '/swf/'
     });
+    videojs.options.flash.swf = "/swf/video-js.swf"
 </script>
+
+<video id="video-player" class="video-js vjs-default-skin vjs-big-play-centered"
+       controls preload="false" width="480" height="320"
+       poster= "/uploads/media/{{ options.thumbnail.getKey() }}"
+       data-setup='{"example_option":true}'>
+    <source src="{{ options.file }}" type='video/mp4' />
+</video>
