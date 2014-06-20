@@ -21,27 +21,9 @@
     {#});#}
 {#</script>#}
 
-
-<video id="video-player" class="video-js vjs-default-skin vjs-big-play-centered"
+<video id="video-player-{{ options.id }}" class="video-js vjs-default-skin vjs-big-play-centered"
        controls preload="metadata" width="600" height="{{ 600 * options.height / options.width }}"
        poster= "/uploads/media/{{ options.thumbnail.getKey() }}"
        data-setup='{"example_option":true}'>
     <source src="{{ options.file }}" type='video/mp4' />
 </video>
-
-<script>
-    var video = document.getElementById('video-player');
-    var curtime = 0;
-    video.addEventListener("timeupdate", function() {
-        if(Math.round(this.currentTime) != curtime){
-            curtime = Math.round(this.currentTime);
-            for(var i in video_overlays){
-                if(video_overlays[i].start <= curtime && video_overlays[i].end >= curtime){
-                    $(video_overlays[i].id).show();
-                }else{
-                    $(video_overlays[i].id).hide();
-                }
-            }
-        }
-    }, false);
-</script>

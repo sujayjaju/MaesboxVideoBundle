@@ -241,6 +241,7 @@ class VideoProvider extends BaseProvider
     {
         $box = $this->getBoxHelperProperties($media, $format, $options);
         return array_merge(array(
+            'id' => key_exists("id", $options) ? $options["id"] : $media->getId(),
             'title' => $media->getName(),
             'thumbnail' => $this->getReferenceImage($media),
             'file' => $this->generatePublicUrl($media, $format),
