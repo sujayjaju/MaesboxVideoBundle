@@ -79,15 +79,16 @@ class VideoProvider extends BaseProvider
         if (!$media->getProviderReference()) {
             $media->setProviderReference($this->generateReferenceName($media));
         }
-        //On calcule le nombre d'images par seconde
-        $img_par_s=$fileinfos->getFrameCount()/$fileinfos->getDuration();
 
-        // Récupère l'image
-        $frame = $fileinfos->getFrame(round(15*$img_par_s));
-        if(!$frame){
-            $frame = $fileinfos->getFrame(round($fileinfos->getFrameCount()/2));
+        $frame_pos = round($fileinfos->getFrameCount() / 2);
+        $frame = $fileinfos->getFrame($frame_pos);
+        while(!$frame && $frame_pos > 0){
+            $frame_pos--;
+            $frame = $fileinfos->getFrame($frame_pos);
         }
-        //echo 15*$img_par_s ."|". $fileinfos->getFrameCount(); exit;
+        if(!$frame){
+            echo "Thumbnail Generation Failed"; exit;
+        }
         if ($media->getBinaryContent()) {
             $media->setContentType($media->getBinaryContent()->getMimeType());
             $media->setSize($media->getBinaryContent()->getSize());
@@ -280,13 +281,14 @@ class VideoProvider extends BaseProvider
         if (!$media->getProviderReference()) {
             $media->setProviderReference($this->generateReferenceName($media));
         }
-        //On calcule le nombre d'images par seconde
-        $img_par_s=$fileinfos->getFrameCount()/$fileinfos->getDuration();        
-        
-        // Récupère l'image
-        $frame = $fileinfos->getFrame(round(15*$img_par_s));
+        $frame_pos = round($fileinfos->getFrameCount() / 2);
+        $frame = $fileinfos->getFrame($frame_pos);
+        while(!$frame && $frame_pos > 0){
+            $frame_pos--;
+            $frame = $fileinfos->getFrame($frame_pos);
+        }
         if(!$frame){
-            $frame = $fileinfos->getFrame(round($fileinfos->getFrameCount()/2));
+            echo "Thumbnail Generation Failed"; exit;
         }
         
         $img = $frame->toGDImage();
