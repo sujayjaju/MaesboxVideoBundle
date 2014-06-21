@@ -83,8 +83,11 @@ class VideoProvider extends BaseProvider
         $img_par_s=$fileinfos->getFrameCount()/$fileinfos->getDuration();
 
         // Récupère l'image
-        $frame = $fileinfos->getFrame(15*$img_par_s);
-        
+        $frame = $fileinfos->getFrame(round(15*$img_par_s));
+        if(!$frame){
+            $frame = $fileinfos->getFrame(round($fileinfos->getFrameCount()/2));
+        }
+        //echo 15*$img_par_s ."|". $fileinfos->getFrameCount(); exit;
         if ($media->getBinaryContent()) {
             $media->setContentType($media->getBinaryContent()->getMimeType());
             $media->setSize($media->getBinaryContent()->getSize());
@@ -281,7 +284,10 @@ class VideoProvider extends BaseProvider
         $img_par_s=$fileinfos->getFrameCount()/$fileinfos->getDuration();        
         
         // Récupère l'image
-        $frame = $fileinfos->getFrame(15*$img_par_s);
+        $frame = $fileinfos->getFrame(round(15*$img_par_s));
+        if(!$frame){
+            $frame = $fileinfos->getFrame(round($fileinfos->getFrameCount()/2));
+        }
         
         $img = $frame->toGDImage();
         ImageJpeg($img, sprintf('%s/%s/%s',$this->getFilesystem()->getAdapter()->getDirectory(), $this->generatePath($media),str_replace($this->getExtension($media), 'jpeg', $media->getProviderReference())));
