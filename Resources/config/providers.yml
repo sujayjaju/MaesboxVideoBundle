@@ -12,8 +12,8 @@ services:
             - @sonata.media.cdn.server
             - @sonata.media.generator.default
             - @sonata.media.thumbnail.format
-            - [ flv, mp4, avi, mkv ]
-            - [ video/x-flv, video/x-msvideo, video/mp4 ]
+            - [ flv, mp4, avi, mkv, mpv, m4v ]
+            - [ video/x-flv, video/x-msvideo, video/mp4, video/quicktime ]
             - @sonata.media.resizer.simple
             - @sonata.media.metadata.proxy
         calls:

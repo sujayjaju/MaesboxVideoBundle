@@ -120,6 +120,7 @@ class VideoProvider extends BaseProvider
 
     public function generateThumbnails(MediaInterface $media, $ext = 'jpeg') 
     {
+        echo "Processing Video..."; flush();
 
         //convert video
         $source =  sprintf('%s/%s/%s',
@@ -132,12 +133,14 @@ class VideoProvider extends BaseProvider
             $this->generatePath($media),
             $media->getProviderReference());
 
+        $path = preg_replace('/\.[^.]+$/', '.' . 'mp4', $path);
+
         $height = round(480 * $media->getHeight() / $media->getWidth());
 
         $fast_preset = "-coder 1 -flags +loop -cmp +chroma -partitions +parti8x8+parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1 -qcomp 0.6 -qmin 10 -qmax 51 -qdiff 4 -bf 3 -refs 2 -directpred 1 -trellis 1 -flags2 +bpyramid+mixed_refs+wpred+dct8x8+fastpskip -wpredp 2 -rc_lookahead 30";
         $ffcmd = "ffmpeg -i $source $fast_preset -s 480x$height -ab 128K -b 896K -vcodec libx264 -acodec aac -strict experimental $path" ;
         $bxcmd = "MP4Box -inter 200 $source" ;
-        echo $ffcmd;
+        //echo $ffcmd; exit;
         $output = array();
         $return = 0;
         exec("$ffcmd && $bxcmd", $output, $return);
@@ -455,9 +458,8 @@ class VideoProvider extends BaseProvider
     {
         $ext = $media->getExtension();
         if (!is_string($ext) || strlen($ext) < 3) {
-            $ext = $this->defaultFormat;
+            $ext = "mp4";
         }
-
         return $ext;
     }
 }
