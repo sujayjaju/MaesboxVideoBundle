@@ -197,6 +197,10 @@ class VideoProvider extends BaseProvider
             $path = sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
         }elseif ($format == 'admin') {
             $path = sprintf('%s/%s', $this->generatePath($media),str_replace($this->getExtension($media), 'jpeg', $media->getProviderReference()));
+        }elseif ($format == 'ogg') {
+            $path = sprintf('%s/videos_%s_%s', $this->generatePath($media), $format, str_replace($this->getExtension($media), 'ogv', $media->getProviderReference()));
+        } elseif ($format == 'big') {
+            $path = sprintf('%s/videos_%s_%s', $this->generatePath($media), $format, str_replace($this->getExtension($media), 'mp4', $media->getProviderReference()));
         } else {
             $path = sprintf('%s/%s_%s', $this->generatePath($media), $format, $media->getProviderReference());
         }
