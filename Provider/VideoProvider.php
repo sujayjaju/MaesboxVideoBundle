@@ -137,7 +137,14 @@ class VideoProvider extends BaseProvider
             $this->generatePath($media),
             $media->getProviderReference());
 
+        $path2 = sprintf('%s/%s/videos_ogg_%s',
+            $this->getFilesystem()->getAdapter()->getDirectory(),
+            $this->generatePath($media),
+            $media->getProviderReference());
+
+
         $path = preg_replace('/\.[^.]+$/', '.' . 'mp4', $path);
+        $ogg = preg_replace('/\.[^.]+$/', '.' . 'ogv', $path2);
 
         $height = round(480 * $media->getHeight() / $media->getWidth());
 
