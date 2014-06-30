@@ -208,10 +208,10 @@ class VideoProvider extends BaseProvider
             $path = sprintf('%s/%s', $this->generatePath($media), $media->getProviderReference());
         }elseif ($format == 'admin') {
             $path = sprintf('%s/%s', $this->generatePath($media),str_replace($this->getExtension($media), 'jpeg', $media->getProviderReference()));
-        }elseif ($format == 'ogg') {
-            $path = sprintf('%s/videos_%s_%s', $this->generatePath($media), $format, str_replace($this->getExtension($media), 'ogv', $media->getProviderReference()));
-        } elseif ($format == 'big') {
-            $path = sprintf('%s/videos_%s_%s', $this->generatePath($media), $format, str_replace($this->getExtension($media), 'mp4', $media->getProviderReference()));
+        }elseif ($format == 'videos_ogg') {
+            $path = sprintf('%s/%s_%s', $this->generatePath($media), $format, str_replace($media->getExtension(), 'ogv', $media->getProviderReference()));
+        } elseif ($format == 'videos_big') {
+            $path = sprintf('%s/%s_%s', $this->generatePath($media), $format, str_replace($media->getExtension(), 'mp4', $media->getProviderReference()));
         } else {
             $path = sprintf('%s/%s_%s', $this->generatePath($media), $format, $media->getProviderReference());
         }
@@ -480,7 +480,7 @@ class VideoProvider extends BaseProvider
     protected function getExtension(MediaInterface $media)
     {
         $ext = $media->getExtension();
-        if (!is_string($ext) || strlen($ext) < 3) {
+        if (!is_string($ext) || strlen($ext) < 2) {
             $ext = "mp4";
         }
         return $ext;
